@@ -1,0 +1,11 @@
+{
+    "autoload": {
+        "psr-4": {
+            "app\\": "src\\public",
+            "navic\\": "src\\system"
+        }
+    },
+    "require": {
+        "slim/slim": "^3.0"
+    }
+}
