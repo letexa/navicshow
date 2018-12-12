@@ -22,8 +22,8 @@ $app->add(new TokenAuthentication([
 $app->any('[/{params:.*}]', function (Request $request, Response $response, array $args) {
     $params = explode('/', $args['params']);
     
-    $controller = _NAMESPACE_ . 'controller\\' . ucfirst($params[0] ?: 'index') . 'Controller';
-    $action = ($params[1] ?: 'index') . 'Action';
+    $controller = _NAMESPACE_ . 'controller\\' . ucfirst(!empty($params[0]) ? $params[0] : 'index') . 'Controller';
+    $action = (!empty($params[1]) ? $params[1] : 'index') . 'Action';
     
     unset($params[0]);
     unset($params[1]);
