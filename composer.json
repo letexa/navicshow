@@ -6,6 +6,13 @@
         }
     },
     "require": {
-        "slim/slim": "^3.0"
+        "slim/slim": "^3.0",
+        "sinergi/token": "^0.1.0",
+        "dyorg/slim-token-authentication": "^0.3.3",
+        "vakata/config": "^2.0",
+        "php-activerecord/php-activerecord": "^1.2"
+    },
+    "require-dev": {
+        "odan/phinx-migrations-generator": "^3.1"
     }
 }

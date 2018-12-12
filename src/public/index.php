@@ -1,16 +1,28 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use Slim\Middleware\TokenAuthentication;
 
-require '../../vendor/autoload.php';
+require_once '../../vendor/autoload.php';
+require_once '../../constant.php';
+require_once '../../resources/config.php';
+require_once '../../resources/error.php';
+require_once '../../resources/active_record.php';
+require_once '../../resources/authenticator.php';
 
-define('_NAMESPACE_', 'app\\controller\\');
+$app = new \Slim\App($c);
 
-$app = new \Slim\App;
+$app->add(new TokenAuthentication([
+    'path' => '/',
+    'authenticator' => $authenticator,
+    'secure' => true,
+    'relaxed' => ['navicshow.loc']
+]));
+
 $app->any('[/{params:.*}]', function (Request $request, Response $response, array $args) {
     $params = explode('/', $args['params']);
     
-    $controller = _NAMESPACE_ . ucfirst($params[0] ?: 'index') . 'Controller';
+    $controller = _NAMESPACE_ . 'controller\\' . ucfirst($params[0] ?: 'index') . 'Controller';
     $action = ($params[1] ?: 'index') . 'Action';
     
     unset($params[0]);
@@ -26,7 +38,7 @@ $app->any('[/{params:.*}]', function (Request $request, Response $response, arra
                         ->withHeader('Content-Type', 'application/json')
                         ->write(json_encode([
                             'code' => 404, 
-                            'response' => 'Not found'
+                            'message' => 'Not found'
                         ]));
     }
 });
