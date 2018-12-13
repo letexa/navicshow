@@ -1,0 +1,15 @@
+class_name: ApiTester
+modules:
+   enabled:
+       - \Helper\Api
+       - REST:
+           depends: PhpBrowser
+           url: 'http://navicshow.loc'
+       - Db:
+           dsn: 'mysql:host=localhost;dbname=navicshow_test'
+           user: 'root'
+           password: 'SYSADM'
+           dump: tests/_data/dump.sql
+           populate: true
+           cleanup: true
+           reconnect: true

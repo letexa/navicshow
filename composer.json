@@ -10,9 +10,11 @@
         "sinergi/token": "^0.1.0",
         "dyorg/slim-token-authentication": "^0.3.3",
         "vakata/config": "^2.0",
-        "php-activerecord/php-activerecord": "^1.2"
+        "php-activerecord/php-activerecord": "^1.2",
+        "odan/phinx-migrations-generator": "^3.1"
+        
     },
     "require-dev": {
-        "odan/phinx-migrations-generator": "^3.1"
+        "codeception/codeception": "^2.5"
     }
 }
