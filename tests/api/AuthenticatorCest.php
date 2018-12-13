@@ -35,6 +35,6 @@ class AuthenticatorCest
          * Не правильный токен
          */
         $I->sendGET('/?authorization='.$this->falseToken);
-        $I->dontSeeResponseCodeIs(200);
+        $I->seeResponseCodeIs(401);
     }
 }
