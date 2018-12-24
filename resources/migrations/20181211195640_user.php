@@ -9,6 +9,9 @@ class User extends AbstractMigration
 {
     public function up()
     {
+        $config = new \vakata\config\Config([ 'key' => 'value' ]);
+        $config->fromFile('.env');
+        
         $table = $this->table(UserModel::TABLE_NAME);
         $table->addColumn('username', 'string', ['limit' => 20])
               ->addColumn('token', 'string', ['limit' => 70])
@@ -19,7 +22,7 @@ class User extends AbstractMigration
         
         $row = [
             'username' => 'admin',
-            'token' => StringGenerator::randomAlnum(70)
+            'token' => md5($config->get('TOKEN'))
         ];
         
         $table->insert($row)->saveData();

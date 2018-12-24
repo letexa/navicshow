@@ -13,13 +13,11 @@ class AuthenticatorCest
     
     public function _before(ApiTester $I)
     {
-        $token = $I->grabColumnFromDatabase('users', 'token', ['username' => 'admin']);
-        if (!empty($token[0])) {
-            $this->trueToken = $token[0];
-        }
+        $config = new \vakata\config\Config([ 'key' => 'value' ]);
+        $config->fromFile('.env');
+        $this->trueToken = $config->get('TOKEN');
         
         $this->falseToken = StringGenerator::randomAlnum(70);
-        echo $this->falseToken;
     }
 
     // tests
@@ -28,13 +26,13 @@ class AuthenticatorCest
         /**
          * Правильный токен
          */
-        $I->sendGET('/?authorization='.$this->trueToken);
+        $I->sendGET('/?authorization='.md5($this->trueToken));
         $I->seeResponseCodeIs(200);
         
         /**
          * Не правильный токен
          */
-        $I->sendGET('/?authorization='.$this->falseToken);
+        $I->sendGET('/?authorization='.md5($this->falseToken));
         $I->seeResponseCodeIs(401);
     }
 }

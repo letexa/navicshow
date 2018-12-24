@@ -1,7 +1,7 @@
 <?php
 
 $config = new \vakata\config\Config([ 'key' => 'value' ]);
-$config->fromFile('config.env');
+$config->fromFile('.env');
 
 // Framework bootstrap code here
 //require_once __DIR__ . '/config/bootstrap.php';
