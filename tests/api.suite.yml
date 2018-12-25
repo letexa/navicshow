@@ -12,4 +12,7 @@ modules:
            dump: tests/_data/dump.sql
            populate: true
            cleanup: true
-           reconnect: true    
+           reconnect: true
+   config:
+       \Helper\Api:
+           token: '%TOKEN%'
