@@ -2,7 +2,7 @@
 
 namespace navic;
 
-use app\exception\NavException;
+use navic\exception\NavException;
 
 /**
  * Базовый класс контроллер
@@ -35,6 +35,10 @@ class Controller {
         
         if (!isset($this->__requestMethods[$this->action]) && !$this->request->isMethod('GET')) {
             throw new NavException('Bad Request', 400, $this->response);
+        }
+        
+        if (isset($this->__access[$this->action]) && class_exists('app\\Access')) {
+            
         }
     }
             

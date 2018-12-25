@@ -1,6 +1,6 @@
 <?php
 
-namespace app\exception;
+namespace navic\exception;
 
 class NavException extends \Exception {
     
