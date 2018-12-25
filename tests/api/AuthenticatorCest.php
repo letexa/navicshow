@@ -7,8 +7,6 @@ use Sinergi\Token\StringGenerator;
  */
 class AuthenticatorCest
 {
-    private $trueToken;
-    
     private $falseToken;
     
     public function _before(ApiTester $I)
@@ -22,7 +20,7 @@ class AuthenticatorCest
         /**
          * Правильный токен
          */
-        $I->sendGET('/?authorization='.md5($I->getToken()));
+        $I->sendGET('/?authorization='.md5($I->getUserToken()));
         $I->seeResponseCodeIs(200);
         
         /**

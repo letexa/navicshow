@@ -6,9 +6,13 @@ namespace Helper;
 
 class Api extends \Codeception\Module
 {
-    protected $requiredFields = ['token'];
+    protected $requiredFields = ['adminToken', 'userToken'];
 
-    public function getToken() {
-        return $this->config['token'];
+    public function getAdminToken() {
+        return $this->config['adminToken'];
+    }
+    
+    public function getUserToken() {
+        return $this->config['userToken'];
     }
 }

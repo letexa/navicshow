@@ -15,4 +15,5 @@ modules:
            reconnect: true
    config:
        \Helper\Api:
-           token: '%TOKEN%'
+           adminToken: '%ADMIN_TOKEN%'
+           userToken: '%USER_TOKEN%'
