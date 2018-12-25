@@ -20,13 +20,13 @@ class AuthenticatorCest
         /**
          * Правильный токен
          */
-        $I->sendGET('/?authorization='.md5($I->getUserToken()));
+        $I->sendGET('/?authorization='.$I->getUserToken());
         $I->seeResponseCodeIs(200);
         
         /**
          * Не правильный токен
          */
-        $I->sendGET('/?authorization='.md5($this->falseToken));
+        $I->sendGET('/?authorization='.$this->falseToken);
         $I->seeResponseCodeIs(401);
     }
 }

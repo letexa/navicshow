@@ -22,15 +22,21 @@ $app->add(new TokenAuthentication([
 $app->any('[/{params:.*}]', function (Request $request, Response $response, array $args) {
     $params = explode('/', $args['params']);
     
-    $controller = _NAMESPACE_ . 'controller\\' . ucfirst(!empty($params[0]) ? $params[0] : 'index') . 'Controller';
-    $action = (!empty($params[1]) ? $params[1] : 'index') . 'Action';
-    
+    $install = new stdClass();
+    $install->request = $request;
+    $install->response = $response;
+    $install->controller = ucfirst(!empty($params[0]) ? $params[0] : 'index');
+    $install->action = !empty($params[1]) ? $params[1] : 'index';
+
     unset($params[0]);
     unset($params[1]);
     
+    $controller = _NAMESPACE_ . 'controller\\' . $install->controller . 'Controller';
+    $action = $install->action . 'Action';
+    
     if (method_exists($controller, $action)) {
         try {
-            $obj = new $controller($response);
+            $obj = new $controller($install);
             return call_user_func_array([$obj, $action], $params);
         } catch (Exception $ex) {}
     } else {

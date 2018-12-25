@@ -6,11 +6,10 @@ use app\model\User;
 $authenticator = function($request, TokenAuthentication $tokenAuth) {
 
     $token = $tokenAuth->findToken($request);
-    $user = User::find('one', ['token' => $token]);
+    $user = User::find('one', ['token' => md5($token)]);
     
     if (!$user) {
         throw new UnauthorizedException('Invalid Token');
-        exit;
     }
     
     
