@@ -6,5 +6,17 @@ namespace Helper;
 
 class Api extends \Codeception\Module
 {
+    public $token;
+    
+    public function __construct(\Codeception\Lib\ModuleContainer $moduleContainer, $config = null) {
+        parent::__construct($moduleContainer, $config);
+        
+        $config = new \vakata\config\Config([ 'key' => 'value' ]);
+        $config->fromFile('.env');
+        $this->token = $config->get('TOKEN');
+    }
 
+    public function getToken() {
+        return $this->token;
+    }
 }

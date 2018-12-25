@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Дек 24 2018 г., 10:27
+-- Время создания: Дек 25 2018 г., 09:00
 -- Версия сервера: 5.7.16-0ubuntu0.16.04.1
 -- Версия PHP: 7.1.25-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -33,7 +33,7 @@ CREATE TABLE `phinxlog` (
 --
 
 INSERT INTO `phinxlog` (`version`, `migration_name`, `start_time`, `end_time`, `breakpoint`) VALUES
-(20181211195640, 'User', '2018-12-21 07:18:30', '2018-12-21 07:18:30', 0);
+(20181211195640, 'User', '2018-12-25 06:00:03', '2018-12-25 06:00:03', 0);
 
 -- --------------------------------------------------------
 
@@ -54,7 +54,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `token`, `created`, `updated`) VALUES
-(1, 'admin', 'A6V5ElpWSfhWKdk18WoSBvsxKo4yC8sHAm6GlqUKLMoEfHx7ZUjpPlvMsvUtKwZKEUdWUE', '2018-12-21 07:18:30', '2018-12-21 07:18:30');
+(1, 'admin', '2109733ddcf18f9144d01f9d6b7eabbb', '2018-12-25 06:00:03', '2018-12-25 06:00:03');
 
 --
 -- Индексы сохранённых таблиц

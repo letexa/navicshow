@@ -6,10 +6,10 @@ modules:
            depends: PhpBrowser
            url: 'http://navicshow.loc'
        - Db:
-           dsn: 'mysql:host=localhost;dbname=navicshow_test'
-           user: 'root'
-           password: 'SYSADM'
+           dsn: 'mysql:host=%TEST_DB_HOST%;dbname=%TEST_DB_DATABASE%'
+           user: '%TEST_DB_USERNAME%'
+           password: '%DB_PASSWORD%'
            dump: tests/_data/dump.sql
            populate: true
            cleanup: true
-           reconnect: true
+           reconnect: true    

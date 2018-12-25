@@ -13,10 +13,6 @@ class AuthenticatorCest
     
     public function _before(ApiTester $I)
     {
-        $config = new \vakata\config\Config([ 'key' => 'value' ]);
-        $config->fromFile('.env');
-        $this->trueToken = $config->get('TOKEN');
-        
         $this->falseToken = StringGenerator::randomAlnum(70);
     }
 
@@ -26,7 +22,7 @@ class AuthenticatorCest
         /**
          * Правильный токен
          */
-        $I->sendGET('/?authorization='.md5($this->trueToken));
+        $I->sendGET('/?authorization='.md5($I->getToken()));
         $I->seeResponseCodeIs(200);
         
         /**
