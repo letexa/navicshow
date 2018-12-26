@@ -3,21 +3,15 @@
 namespace app\controller;
 
 use navic\Controller;
-use app\model\Role;
+use app\model\Category;
 
 class CategoryController extends Controller {
     
-    protected $__requestMethods = [
-        'create' => 'PUT'
-    ];
-    
-    protected $__access = [
-        'create' => Role::ADMIN
-    ];
-    
     public function createAction()
     {
-        echo 'hello';
+        $category = new Category();
+        $category->name = $this->params['name'];
+        $category->save();
     }
 }
 

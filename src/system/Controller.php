@@ -14,13 +14,11 @@ class Controller {
     
     public $action;
     
+    public $params;
+    
     protected $request;
     
     protected $response;
-    
-    protected $__requestMethods = array();
-    
-    protected $__access = array();
     
     public function __construct($install) 
     {
@@ -28,18 +26,7 @@ class Controller {
         $this->response = $install->response;
         $this->controller = $install->controller;
         $this->action = $install->action;
-        
-        if (isset($this->__requestMethods[$this->action]) && !$this->request->isMethod($this->__requestMethods[$this->action])) {
-            throw new NavException('Bad Request', 400, $this->response);
-        }
-        
-        if (!isset($this->__requestMethods[$this->action]) && !$this->request->isMethod('GET')) {
-            throw new NavException('Bad Request', 400, $this->response);
-        }
-        
-        if (isset($this->__access[$this->action]) && class_exists('app\\Access')) {
-            
-        }
+        $this->params = $this->request->getQueryParams();
     }
             
     

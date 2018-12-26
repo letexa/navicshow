@@ -11,7 +11,8 @@
         "dyorg/slim-token-authentication": "^0.3.3",
         "vakata/config": "^2.0",
         "php-activerecord/php-activerecord": "^1.2",
-        "odan/phinx-migrations-generator": "^3.1"
+        "odan/phinx-migrations-generator": "^3.1",
+        "symfony/validator": "^4.2"
         
     },
     "require-dev": {

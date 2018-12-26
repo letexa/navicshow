@@ -38,7 +38,14 @@ $app->any('[/{params:.*}]', function (Request $request, Response $response, arra
         try {
             $obj = new $controller($install);
             return call_user_func_array([$obj, $action], $params);
-        } catch (Exception $ex) {}
+        } catch (Exception $ex) {
+            return $response->withStatus($ex->getCode())
+                        ->withHeader('Content-Type', 'application/json')
+                        ->write(json_encode([
+                            'code' => $ex->getCode(), 
+                            'message' => $ex->getMessage()
+                        ]));
+        }
     } else {
         return $response->withStatus(404)
                         ->withHeader('Content-Type', 'application/json')
