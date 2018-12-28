@@ -16,6 +16,10 @@ class Controller {
     
     public $params;
     
+    public $code = 200;
+    
+    public $message = 'OK';
+    
     protected $request;
     
     protected $response;

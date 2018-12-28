@@ -2,7 +2,7 @@
 
 namespace app\model;
 
-class Role extends \ActiveRecord\Model {
+class Role extends \navic\Model {
     
     const USER = 0;
     

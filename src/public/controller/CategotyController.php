@@ -11,7 +11,19 @@ class CategoryController extends Controller {
     {
         $category = new Category();
         $category->name = $this->params['name'];
-        $category->save();
+        $result = $category->save();
+        
+        if($result !== true) {
+            $this->code = 400;
+            $this->message = $result;
+        }
+        
+        return $this->response->withStatus($this->code)
+                    ->withHeader('Content-Type', 'application/json')
+                    ->write(json_encode([
+                        'code' => $this->code, 
+                        'message' => $this->message
+                    ]));
     }
 }
 

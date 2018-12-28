@@ -2,7 +2,7 @@
 
 namespace app\model;
 
-class User extends \ActiveRecord\Model {
+class User extends \navic\Model {
     
     const TABLE_NAME = 'users';
     
