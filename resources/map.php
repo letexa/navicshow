@@ -7,7 +7,7 @@
 
 return [
     '/category/create' => [
-        //'method' => 'PUT',
+        'method' => 'PUT',
         'access' => \app\model\Role::ADMIN
     ]
 ];

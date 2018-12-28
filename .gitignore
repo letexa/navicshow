@@ -1,3 +1,4 @@
 /vendor
 /nbproject
 /tests/_data/dump.sql
+/.env
