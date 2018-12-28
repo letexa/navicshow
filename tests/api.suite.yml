@@ -8,7 +8,7 @@ modules:
        - Db:
            dsn: 'mysql:host=%TEST_DB_HOST%;dbname=%TEST_DB_DATABASE%'
            user: '%TEST_DB_USERNAME%'
-           password: '%DB_PASSWORD%'
+           password: '%TEST_DB_PASSWORD%'
            dump: tests/_data/dump.sql
            populate: true
            cleanup: true

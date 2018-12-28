@@ -10,7 +10,7 @@ class CategoryController extends Controller {
     public function createAction()
     {
         $category = new Category();
-        $category->name = $this->params['name'];
+        $category->name = $this->request->getParsedBodyParam('name');
         $result = $category->save();
         
         if($result !== true) {
