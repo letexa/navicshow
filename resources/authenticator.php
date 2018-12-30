@@ -1,5 +1,5 @@
 <?php
-use Slim\Middleware\TokenAuthentication;
+use navic\TokenAuthentication;
 use app\exception\UnauthorizedException;
 use app\model\User;
 
@@ -7,9 +7,9 @@ $authenticator = function($request, TokenAuthentication $tokenAuth) {
     
     $token = $tokenAuth->findToken($request);
     $user = User::find('one', ['token' => md5($token)]);
-    
+
     if (!$user) {
-        throw new UnauthorizedException('Invalid Token');
+        throw new UnauthorizedException('Invalid Token', 401);
     }
 
     $map = require_once __DIR__ . '/map.php';
@@ -19,14 +19,15 @@ $authenticator = function($request, TokenAuthentication $tokenAuth) {
         if (isset($item['method']) && !$request->isMethod($item['method'])) {
             throw new UnauthorizedException('Bad Request', 400);
         }
-        
+
         if (!isset($item['method']) && !$request->isMethod('GET')) {
             throw new UnauthorizedException('Bad Request', 400);
         }
-        
+
         if (isset($item['access']) && $user->role < $item['access']) {
             throw new UnauthorizedException('Forbidden', 403);
         }
+        
     }
     
 };

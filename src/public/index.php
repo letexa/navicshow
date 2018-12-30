@@ -1,7 +1,7 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use Slim\Middleware\TokenAuthentication;
+use navic\TokenAuthentication;
 
 require_once '../../vendor/autoload.php';
 require_once '../../constant.php';
@@ -39,20 +39,10 @@ $app->any('[/{params:.*}]', function (Request $request, Response $response, arra
             $obj = new $controller($install);
             return call_user_func_array([$obj, $action], $params);
         } catch (Exception $ex) {
-            return $response->withStatus($ex->getCode())
-                        ->withHeader('Content-Type', 'application/json')
-                        ->write(json_encode([
-                            'code' => $ex->getCode(), 
-                            'message' => $ex->getMessage()
-                        ]));
+            return $this->response->withJson(['code' => $ex->getCode(), 'message' => $ex->getMessage()]);
         }
     } else {
-        return $response->withStatus(404)
-                        ->withHeader('Content-Type', 'application/json')
-                        ->write(json_encode([
-                            'code' => 404, 
-                            'message' => 'Not found'
-                        ]));
+        return $this->response->withJson(['code' => 404, 'message' => 'Not found']);
     }
 });
 $app->run();

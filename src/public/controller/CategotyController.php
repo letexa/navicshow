@@ -18,12 +18,7 @@ class CategoryController extends Controller {
             $this->message = $result;
         }
         
-        return $this->response->withStatus($this->code)
-                    ->withHeader('Content-Type', 'application/json')
-                    ->write(json_encode([
-                        'code' => $this->code, 
-                        'message' => $this->message
-                    ]));
+        return $this->response->withJson(['code' => $this->code, 'message' => $this->message]);
     }
 }
 

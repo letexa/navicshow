@@ -8,12 +8,7 @@ class IndexController extends Controller {
     
     public function indexAction()
     {
-        return $this->response->withStatus(200)
-                        ->withHeader('Content-Type', 'application/json')
-                        ->write(json_encode([
-                            'code' => 200, 
-                            'response' => 'This is Navicshow API!'
-                        ]));
+        return $this->response->withJson(['code' => 200, 'response' => 'This is Navicshow API!']);
     }
 }
 
