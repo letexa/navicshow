@@ -127,6 +127,23 @@ class TokenAuthentication extends \Slim\Middleware\TokenAuthentication
 
         return $response->withJson($res, $code, JSON_PRETTY_PRINT);
     }
+    
+    public function findToken(Request $request)
+    {
+        $tokenSearch = new TokenSearch([
+            'header' => $this->options['header'],
+            'regex' => $this->options['regex'],
+            'parameter' => $this->options['parameter'],
+            'cookie' => $this->options['cookie'],
+            'argument' => $this->options['argument']
+        ]);
+
+        $token = $tokenSearch($request);
+        $request->withAttribute('authorization', $token);
+        $this->setResponseToken($token);
+
+        return $token;
+    }
 
     public function setResponseMessage($message)
     {

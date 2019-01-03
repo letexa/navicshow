@@ -19,6 +19,27 @@ $app->add(new TokenAuthentication([
     'relaxed' => ['navicshow.loc']
 ]));
 
+$app->get('/category/{id}', function ($request, $response, $args) {
+
+    $install = new stdClass();
+    $install->request = $request;
+    $install->response = $response;
+    $install->controller = 'Category';
+    $install->action = 'index';
+    
+    try {
+        $category = new \app\controller\CategoryController($install);
+        return $category->indexAction($args['id']);
+    } catch (Exception $ex) {
+        return $this->response->withStatus(404)
+                    ->withHeader('Content-Type', 'application/json')
+                    ->write(json_encode([
+                        'code' => 404, 
+                        'message' => 'Category not found'
+                    ]));
+    }
+});
+
 $app->any('[/{params:.*}]', function (Request $request, Response $response, array $args) {
     $params = explode('/', $args['params']);
     
@@ -42,7 +63,12 @@ $app->any('[/{params:.*}]', function (Request $request, Response $response, arra
             return $this->response->withJson(['code' => $ex->getCode(), 'message' => $ex->getMessage()]);
         }
     } else {
-        return $this->response->withJson(['code' => 404, 'message' => 'Not found']);
+        return $this->response->withStatus(404)
+                    ->withHeader('Content-Type', 'application/json')
+                    ->write(json_encode([
+                        'code' => 404, 
+                        'message' => 'Not found'
+                    ]));
     }
 });
 $app->run();

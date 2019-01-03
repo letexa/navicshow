@@ -7,6 +7,18 @@ use app\model\Category;
 
 class CategoryController extends Controller {
     
+    public function indexAction($id)
+    {
+        $category = Category::find($id);
+        $this->message = [
+            'id' => $category->id,
+            'name' => $category->name,
+            'created' => $category->created,
+            'updated' => $category->updated
+        ];
+        return $this->response->withJson(['code' => $this->code, 'message' => $this->message]);
+    }
+    
     public function createAction()
     {
         $category = new Category();
