@@ -9,13 +9,19 @@ $authenticator = function($request, TokenAuthentication $tokenAuth) {
     $user = User::find('one', ['token' => md5($token)]);
 
     if (!$user) {
-        throw new UnauthorizedException('Invalid Token', 401);
+        throw new UnauthorizedException('Invalid Token');
     }
-
+    
     $map = require_once __DIR__ . '/map.php';
-    if (!empty($map[$request->getUri()->getPath()])) {
-        $item = $map[$request->getUri()->getPath()];
-        
+    $uri = $request->getUri()->getPath();
+    
+    if (substr($uri, -1) == '/') {
+        $uri = substr($uri, 0, (iconv_strlen - 1));
+    }
+    
+    if (!empty($map[$uri]) || !empty($map[$uri . '/'])) {
+        $item = $map[$uri];
+
         if (isset($item['method']) && !$request->isMethod($item['method'])) {
             throw new UnauthorizedException('Bad Request', 400);
         }

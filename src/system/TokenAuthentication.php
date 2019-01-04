@@ -100,7 +100,7 @@ class TokenAuthentication extends \Slim\Middleware\TokenAuthentication
         return false;
     }
 
-    public function error(Request $request, Response $response, $code = 401)
+    public function error(Request $request, Response $response, $code = null)
     {
         /** If exists a custom error function callable, ignore remaining code */
         if (!empty($this->options['error'])) {
@@ -113,6 +113,10 @@ class TokenAuthentication extends \Slim\Middleware\TokenAuthentication
                 throw new \Exception("The error function must return an object of class Response.");
             }
         }
+        
+        if (!$code) {
+            $code = 401;
+        }
 
         $res['code'] = $code;
 
@@ -124,7 +128,7 @@ class TokenAuthentication extends \Slim\Middleware\TokenAuthentication
         if ($this->getResponseToken()) {
             $res['token'] = $this->getResponseToken();
         }
-
+        
         return $response->withJson($res, $code, JSON_PRETTY_PRINT);
     }
     
