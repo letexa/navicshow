@@ -45,7 +45,6 @@ class CategoryController extends Controller {
     public function updateAction()
     {
         try {
-            
             $category = Category::find($this->request->getParsedBodyParam('id'));
             $category->name = $this->request->getParsedBodyParam('name');
             $result = $category->save();
@@ -56,6 +55,17 @@ class CategoryController extends Controller {
             }
 
             return $this->response->withStatus($this->code)->withJson(['code' => $this->code, 'message' => $this->message]);
+        } catch (\ActiveRecord\RecordNotFound $ex) {
+            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Category not found']);
+        }
+    }
+    
+    public function deleteAction()
+    {
+        try {
+            $category = Category::find($this->request->getParsedBodyParam('id'));
+            $category->delete();
+            return $this->response->withJson(['code' => $this->code, 'message' => $this->message]);
         } catch (\ActiveRecord\RecordNotFound $ex) {
             return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Category not found']);
         }

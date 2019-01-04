@@ -13,5 +13,9 @@ return [
     '/category/update' => [
         'method' => 'PATCH',
         'access' => \app\model\Role::ADMIN
+    ],
+    '/category/delete' => [
+        'method' => 'DELETE',
+        'access' => \app\model\Role::ADMIN
     ]
 ];

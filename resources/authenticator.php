@@ -16,7 +16,7 @@ $authenticator = function($request, TokenAuthentication $tokenAuth) {
     $uri = $request->getUri()->getPath();
     
     if (substr($uri, -1) == '/') {
-        $uri = substr($uri, 0, (iconv_strlen - 1));
+        $uri = substr($uri, 0, (iconv_strlen($uri) - 1));
     }
     
     if (!empty($map[$uri]) || !empty($map[$uri . '/'])) {
