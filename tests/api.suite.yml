@@ -17,6 +17,3 @@ modules:
        \Helper\Api:
            adminToken: '%ADMIN_TOKEN%'
            userToken: '%USER_TOKEN%'
-   extensions:
-       enabled:
-           - Codeception\Extension\ArrayExtension
