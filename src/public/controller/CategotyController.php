@@ -4,6 +4,7 @@ namespace app\controller;
 
 use navic\Controller;
 use app\model\Category;
+use app\iterators\CategoryList;
 
 class CategoryController extends Controller {
     
@@ -19,14 +20,23 @@ class CategoryController extends Controller {
             ];
             return $this->response->withJson(['code' => $this->code, 'message' => $this->message]);
         } catch (\ActiveRecord\RecordNotFound $ex) {
-            return $this->response->withStatus(404)
-                    ->withHeader('Content-Type', 'application/json')
-                    ->write(json_encode([
-                        'code' => 404, 
-                        'message' => 'Category not found'
-                    ]));
+            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Category not found']);
         }
     }
+    
+    public function listAction()
+    {
+        $params = $this->request->getQueryParams();
+        $limit = $params['limit'];
+        $offset = $params['offset'];
+
+        try {
+            $categories = Category::find('all', ['limit' => $limit ?: 10, 'offset' => $offset ?: 0, 'order' => 'id DESC']);
+            return $this->response->withJson(['code' => $this->code, 'message' => CategoryList::get($categories)]);
+        } catch (\ActiveRecord\RecordNotFound $ex) {
+            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Category not found']);
+        }
+    }        
     
     public function createAction()
     {

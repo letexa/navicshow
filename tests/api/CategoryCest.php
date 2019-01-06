@@ -4,7 +4,7 @@ use app\model\Category;
 use Sinergi\Token\StringGenerator;
 
 /**
- * Добавление категории
+ * CRUD категории
  * 
  */
 class CategoryCest
