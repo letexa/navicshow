@@ -39,17 +39,17 @@ class CategoryCest
         // Добавление категории без названия
         $I->sendPUT('/category/create?authorization='.$I->getAdminToken());
         $I->seeResponseCodeIs(400);
-        $I->seeResponseContainsJson(['code' => 400, 'message' => ["This value should not be blank."]]);
+        $I->seeResponseContainsJson(['name' => 'This value should not be blank.']);
         
         // Добавление категории с коротким названием
         $I->sendPUT('/category/create?authorization='.$I->getAdminToken(), ['name' => 'Te']);
         $I->seeResponseCodeIs(400);
-        $I->seeResponseContainsJson(['code' => 400, 'message' => ["This value is too short. It should have 3 characters or more."]]);
+        $I->seeResponseContainsJson(['name' => 'This value is too short. It should have 3 characters or more.']);
         
         // Добавление категории с длинным названием
         $I->sendPUT('/category/create?authorization='.$I->getAdminToken(), ['name' => StringGenerator::randomAlnum(260)]);
         $I->seeResponseCodeIs(400);
-        $I->seeResponseContainsJson(['code' => 400, 'message' => ["This value is too long. It should have 255 characters or less."]]);
+        $I->seeResponseContainsJson(['name' => 'This value is too long. It should have 255 characters or less.']);
         
         $id = $I->grabColumnFromDatabase(Category::TABLE_NAME, 'id', ['name' => 'Test category']);
 
@@ -73,7 +73,7 @@ class CategoryCest
         // Редактирование категории без названия
         $I->sendPATCH('/category/update?authorization='.$I->getAdminToken(), ['id' => $id[0]]);
         $I->seeResponseCodeIs(400);
-        $I->seeResponseContainsJson(['code' => 400, 'message' => ["This value should not be blank."]]);
+        $I->seeResponseContainsJson(['name' => 'This value should not be blank.']);
         
         // Редактирование категории через POST
         $I->sendPOST('/category/update/?authorization='.$I->getAdminToken(), ['id' => $id[0], 'name' => 'Update category POST']);
@@ -90,12 +90,12 @@ class CategoryCest
         // Редактирование категории с коротким названием
         $I->sendPATCH('/category/update?authorization='.$I->getAdminToken(), ['id' => $id[0], 'name' => 'Te']);
         $I->seeResponseCodeIs(400);
-        $I->seeResponseContainsJson(['code' => 400, 'message' => ["This value is too short. It should have 3 characters or more."]]);
+        $I->seeResponseContainsJson(['name' => 'This value is too short. It should have 3 characters or more.']);
         
         // Редактирование категории с длинным названием
         $I->sendPATCH('/category/update?authorization='.$I->getAdminToken(), ['id' => $id[0], 'name' => StringGenerator::randomAlnum(260)]);
         $I->seeResponseCodeIs(400);
-        $I->seeResponseContainsJson(['code' => 400, 'message' => ["This value is too long. It should have 255 characters or less."]]);
+        $I->seeResponseContainsJson(['name' => 'This value is too long. It should have 255 characters or less.']);
         
         // Удаление несуществующей категории
         $I->sendDELETE('/category/delete?authorization='.$I->getAdminToken(), ['id' => 206]);

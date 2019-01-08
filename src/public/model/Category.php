@@ -13,18 +13,21 @@ class Category extends \navic\Model {
     
     const NAME_MAX = 255;
     
-    protected $validate;
-    
+    /*
+     * Для ORM валидации
+     */
     static $validates_length_of = [
         ['name', 'within' => [self::NAME_MIN, self::NAME_MAX]]
     ];
 
     public function save($validate = true) {
         
-        $this->violations = $this->validator->validate($this->name, [
-            new Length(['min' => self::NAME_MIN, 'max' => self::NAME_MAX]),
-            new NotBlank(),
-        ]);
+        $this->violations = [
+            'name' => $this->validator->validate($this->name, [
+                new Length(['min' => self::NAME_MIN, 'max' => self::NAME_MAX]),
+                new NotBlank(),
+            ])
+        ];
         
         return parent::save($validate);
     }
