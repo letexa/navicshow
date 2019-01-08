@@ -17,5 +17,17 @@ return [
     '/category/delete' => [
         'method' => 'DELETE',
         'access' => \app\model\Role::ADMIN
+    ],
+    '/article/create' => [
+        'method' => 'PUT',
+        'access' => \app\model\Role::ADMIN
+    ],
+    '/article/update' => [
+        'method' => 'PATCH',
+        'access' => \app\model\Role::ADMIN
+    ],
+    '/article/delete' => [
+        'method' => 'DELETE',
+        'access' => \app\model\Role::ADMIN
     ]
 ];

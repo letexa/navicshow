@@ -2,8 +2,9 @@
 
 namespace app\model;
 
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
+use app\validator\Constraints as AcmeAssert;
+
 
 class Article extends \navic\Model {
     
@@ -37,12 +38,16 @@ class Article extends \navic\Model {
         
         $this->violations = [
             'title' => $this->validator->validate($this->title, [
-                new Length(['min' => self::TITLE_MIN, 'max' => self::TITLE_MAX]),
-                new NotBlank(),
+                new Assert\Length(['min' => self::TITLE_MIN, 'max' => self::TITLE_MAX]),
+                new Assert\NotBlank(),
             ]),
             'text' => $this->validator->validate($this->text, [
-                new Length(['min' => self::TEXT_MIN, 'max' => self::TEXT_MAX]),
-                new NotBlank(),
+                new Assert\Length(['min' => self::TEXT_MIN, 'max' => self::TEXT_MAX]),
+                new Assert\NotBlank(),
+            ]),
+            'category_id' => $this->validator->validate($this->category_id, [
+                new Assert\NotBlank(),
+                new AcmeAssert\CategoryExistence
             ])
         ];
         

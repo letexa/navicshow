@@ -34,7 +34,7 @@ class CategoryController extends Controller {
             $categories = Category::find('all', ['limit' => $limit ?: 10, 'offset' => $offset ?: 0, 'order' => 'id DESC']);
             return $this->response->withJson(['code' => $this->code, 'message' => CategoryList::get($categories)]);
         } catch (\ActiveRecord\RecordNotFound $ex) {
-            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Category not found']);
+            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Categories not found']);
         }
     }        
     

@@ -31,6 +31,18 @@ $app->get('/category/{id:[0-9]+}', function ($request, $response, $args) {
     return $category->indexAction($args['id']);
 });
 
+$app->get('/article/{id:[0-9]+}', function ($request, $response, $args) {
+
+    $install = new stdClass();
+    $install->request = $request;
+    $install->response = $response;
+    $install->controller = 'Article';
+    $install->action = 'index';
+    
+    $article = new \app\controller\ArticleController($install);
+    return $article->indexAction($args['id']);
+});
+
 $app->any('[/{params:.*}]', function (Request $request, Response $response, array $args) {
     $params = explode('/', $args['params']);
 

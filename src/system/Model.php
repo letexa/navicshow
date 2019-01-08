@@ -23,12 +23,12 @@ class Model extends \ActiveRecord\Model {
             foreach($this->violations as $key => $violation) {
                 if (count($violation)) {
                     foreach ($violation as $item) {
-                        $this->errors[][$key] = $item->getMessage();
+                        $this->errors[$key] = $item->getMessage();
                     }
                 }
             }
         }
-        
+    
         if ($this->errors) {
             return ['errors' => $this->errors];
         } else {
