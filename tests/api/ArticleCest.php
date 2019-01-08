@@ -127,5 +127,47 @@ class ArticleCest {
         $id = $I->grabColumnFromDatabase(Article::TABLE_NAME, 'id', ['title' => 'Test article']);
         $id = $id[0];
         
+        // Выбор статьи по id
+        $I->sendGET('/article/'.$id, ['authorization' => $I->getAdminToken()]);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContainsJson(['title' => 'Test article']);
+        
+        $I->sendGET('/article/23', ['authorization' => $I->getAdminToken()]);
+        $I->seeResponseCodeIs(404);
+        $I->seeResponseContainsJson(['message' => 'Article not found']);
+        
+        // Редактирование статьи
+        $I->sendPATCH('/article/update/?authorization='.$I->getAdminToken(), [
+            'id' => $id, 
+            'title' => 'Update article title',
+            'text' => 'Update article text'
+        ]);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContainsJson(['code' => 200, 'message' => 'OK']);
+        
+        // Редактирование статьи через POST
+        $I->sendPOST('/article/update/?authorization='.$I->getAdminToken(), [
+            'id' => $id, 
+            'title' => 'Update article title POST',
+            'text' => 'Update article text POST'
+        ]);
+        $I->seeResponseCodeIs(400);
+        $I->seeResponseContainsJson(['code' => 400, 'message' => 'Bad Request', 'token' => $I->getAdminToken()]);
+        
+        // Редактирование статьи без доступа
+        $I->sendPATCH('/article/update/?authorization='.$I->getUserToken(), [
+            'id' => $id, 
+            'title' => 'Update article title forbidden',
+            'text' => 'Update article text forbidden'
+        ]);
+        $I->seeResponseCodeIs(403);
+        $I->seeResponseContainsJson(['code' => 403, 'message' => 'Forbidden', 'token' => $I->getUserToken()]);
+        $I->dontSeeInDatabase(Category::TABLE_NAME, ['name' => 'Update category forbidden']);
+        
+        // Проверка статьи после обновлений
+        $I->sendGET('/category/'.$id, ['authorization' => $I->getAdminToken()]);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContainsJson(['title' => 'Update article title', 'text' => 'Update article text']);
+        
     }
 }
