@@ -58,16 +58,11 @@ class ArticleController extends Controller {
     
     public function updateAction()
     {
-        $params = $this->request->getParsedBodyParam();
-        if (!$params['id']) {
-            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Article not found']);
-        }
-        
         try {
-            $article = Article::find($params['id']);
-            $article->title = !empty($params['title']) ? $params['title'] : $article->title;
-            $article->text = !empty($params['text']) ? $params['text'] : $article->text;
-            $article->category_id = !empty($params['category_id']) ? $params['category_id'] : $article->category_id;
+            $article = Article::find($this->request->getParsedBodyParam('id'));
+            $article->title = $this->request->getParsedBodyParam('title') ?: $article->title;
+            $article->text = $this->request->getParsedBodyParam('text') ?: $article->text;
+            $article->category_id = $this->request->getParsedBodyParam('category_id') ?: $article->category_id;
             $result = $article->save();
             
             if($result !== true) {

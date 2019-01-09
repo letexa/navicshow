@@ -136,20 +136,19 @@ class ArticleCest {
         $I->seeResponseCodeIs(404);
         $I->seeResponseContainsJson(['message' => 'Article not found']);
         
-        // Редактирование статьи
         $I->sendPATCH('/article/update/?authorization='.$I->getAdminToken(), [
             'id' => $id, 
             'title' => 'Update article title',
-            'text' => 'Update article text'
+            'text' => StringGenerator::randomAlnum(1000)
         ]);
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson(['code' => 200, 'message' => 'OK']);
-        
+
         // Редактирование статьи через POST
         $I->sendPOST('/article/update/?authorization='.$I->getAdminToken(), [
             'id' => $id, 
             'title' => 'Update article title POST',
-            'text' => 'Update article text POST'
+            'text' => StringGenerator::randomAlnum(1000)
         ]);
         $I->seeResponseCodeIs(400);
         $I->seeResponseContainsJson(['code' => 400, 'message' => 'Bad Request', 'token' => $I->getAdminToken()]);
@@ -158,16 +157,53 @@ class ArticleCest {
         $I->sendPATCH('/article/update/?authorization='.$I->getUserToken(), [
             'id' => $id, 
             'title' => 'Update article title forbidden',
-            'text' => 'Update article text forbidden'
+            'text' => StringGenerator::randomAlnum(1000)
         ]);
         $I->seeResponseCodeIs(403);
         $I->seeResponseContainsJson(['code' => 403, 'message' => 'Forbidden', 'token' => $I->getUserToken()]);
-        $I->dontSeeInDatabase(Category::TABLE_NAME, ['name' => 'Update category forbidden']);
+        
+        // Редактирование несуществующей статьи
+        $I->sendPATCH('/article/update/?authorization='.$I->getAdminToken(), [
+            'id' => 34, 
+            'title' => 'Update article title',
+            'text' => StringGenerator::randomAlnum(1000)
+        ]);
+        $I->seeResponseCodeIs(404);
+        $I->seeResponseContainsJson(['code' => 404, 'message' => 'Article not found']);
         
         // Проверка статьи после обновлений
-        $I->sendGET('/category/'.$id, ['authorization' => $I->getAdminToken()]);
+        $I->sendGET('/article/'.$id, ['authorization' => $I->getAdminToken()]);
         $I->seeResponseCodeIs(200);
-        $I->seeResponseContainsJson(['title' => 'Update article title', 'text' => 'Update article text']);
+        $I->seeResponseContainsJson(['title' => 'Update article title']);
+        
+        // Удаление несуществующей статьи
+        $I->sendDELETE('/article/delete?authorization='.$I->getAdminToken(), ['id' => 206]);
+        $I->seeResponseCodeIs(404);
+        $I->seeResponseContainsJson(['message' => 'Article not found']);
+        
+        // Удаление статьи через POST
+        $I->sendPOST('/article/delete/?authorization='.$I->getAdminToken(), ['id' => $id]);
+        $I->seeResponseCodeIs(400);
+        $I->seeResponseContainsJson(['code' => 400, 'message' => 'Bad Request', 'token' => $I->getAdminToken()]);
+        $I->sendGET('/article/'.$id, ['authorization' => $I->getAdminToken()]);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContainsJson(['title' => 'Update article title']);
+        
+        // Удаление статьи без доступа
+        $I->sendDELETE('/article/delete/?authorization='.$I->getUserToken(), ['id' => $id]);
+        $I->seeResponseCodeIs(403);
+        $I->seeResponseContainsJson(['code' => 403, 'message' => 'Forbidden', 'token' => $I->getUserToken()]);
+        $I->sendGET('/article/'.$id, ['authorization' => $I->getAdminToken()]);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContainsJson(['title' => 'Update article title']);
+        
+        // Удаление статьи
+        $I->sendDELETE('/article/delete?authorization='.$I->getAdminToken(), ['id' => $id]);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContainsJson(['code' => 200, 'message' => 'OK']);
+        $I->sendGET('/article/'.$id, ['authorization' => $I->getAdminToken()]);
+        $I->seeResponseCodeIs(404);
+        $I->seeResponseContainsJson(['message' => 'Article not found']);
         
     }
 }
