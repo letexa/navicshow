@@ -27,11 +27,11 @@ class CategoryController extends Controller {
     public function listAction()
     {
         $params = $this->request->getQueryParams();
-        $limit = $params['limit'];
-        $offset = $params['offset'];
+        $limit = !empty($params['limit']) ? $params['limit'] : 10;
+        $offset = !empty($params['offset']) ? $params['offset'] : 0;
 
         try {
-            $categories = Category::find('all', ['limit' => $limit ?: 10, 'offset' => $offset ?: 0, 'order' => 'id DESC']);
+            $categories = Category::find('all', ['limit' => $limit, 'offset' => $offset, 'order' => 'id DESC']);
             return $this->response->withJson(['code' => $this->code, 'message' => CategoryList::get($categories)]);
         } catch (\ActiveRecord\RecordNotFound $ex) {
             return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Categories not found']);
