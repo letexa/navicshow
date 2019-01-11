@@ -9,7 +9,7 @@ php: >= 7.1
     development и test.
  2. Установить зависимые пакеты `composer install`
  3. Выполнить миграции `vendor/bin/phinx-migrations migrate`
- 4. После установки сделать дамп БД для тестов и сохранить в файл /tests/data/dump.sql
+ 4. После установки сделать дамп БД для тестов и сохранить в файл `/tests/_data/dump.sql`
 
 # Тестирование
 
