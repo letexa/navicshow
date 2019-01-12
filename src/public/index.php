@@ -16,7 +16,7 @@ $app->add(new TokenAuthentication([
     'path' => '/',
     'authenticator' => $authenticator,
     'secure' => true,
-    'relaxed' => ['navicshow.loc']
+    'relaxed' => [$config->get('BASE_URL')]
 ]));
 
 $app->get('/category/{id:[0-9]+}', function ($request, $response, $args) {
