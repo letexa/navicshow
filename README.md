@@ -8,8 +8,9 @@ php: >= 7.1
     Параметр ENV  может быть в следующих режимах: production,
     development и test.
  2. Установить зависимые пакеты `composer install`
- 3. Выполнить миграции `vendor/bin/phinx-migrations migrate`
- 4. После установки сделать дамп БД для тестов и сохранить в файл `/tests/_data/dump.sql`
+ 3. Добавить классы в автозагрузку composer dump-autoload -o
+ 4. Выполнить миграции `vendor/bin/phinx-migrations migrate`
+ 5. После установки сделать дамп БД для тестов и сохранить в файл `/tests/_data/dump.sql`
 
 # Тестирование
 
