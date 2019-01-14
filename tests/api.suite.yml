@@ -4,7 +4,7 @@ modules:
        - \Helper\Api
        - REST:
            depends: PhpBrowser
-           url: 'http://navicshow.loc'
+           url: 'http://%BASE_URL%'
        - Db:
            dsn: 'mysql:host=%TEST_DB_HOST%;dbname=%TEST_DB_DATABASE%'
            user: '%TEST_DB_USERNAME%'
