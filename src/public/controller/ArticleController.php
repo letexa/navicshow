@@ -50,7 +50,9 @@ class ArticleController extends Controller {
 
         try {
             $articles = Article::find('all', ['limit' => $limit, 'offset' => $offset, 'order' => 'id DESC']);
-            return $this->response->withJson(['code' => $this->code, 'message' => ArticleList::get($articles)]);
+            return $this->response
+                        ->withHeader('Access-Control-Allow-Origin', '*')
+                        ->withJson(['code' => $this->code, 'message' => ArticleList::get($articles)]);
         } catch (\ActiveRecord\RecordNotFound $ex) {
             return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Articles not found']);
         }
