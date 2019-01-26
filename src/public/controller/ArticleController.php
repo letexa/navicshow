@@ -20,7 +20,7 @@ class ArticleController extends Controller {
                 'created' => $article->created,
                 'updated' => $article->updated
             ];
-            return $this->response->withJson(['code' => $this->code, 'message' => $this->message]);
+            return $this->response->withHeader('Access-Control-Allow-Origin', '*')->withJson(['code' => $this->code, 'message' => $this->message]);
         } catch (\ActiveRecord\RecordNotFound $ex) {
             return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Article not found']);
         }
