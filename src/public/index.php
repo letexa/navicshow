@@ -28,7 +28,11 @@ $app->get('/category/{id:[0-9]+}', function ($request, $response, $args) {
     $install->action = 'index';
     
     $category = new \app\controller\CategoryController($install);
-    return $category->indexAction($args['id']);
+    $data = $category->indexAction($args['id']);
+    return $this->response
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withStatus($data->code)
+            ->withJson(['code' => $data->code, 'message' => $data->message]);
 });
 
 $app->get('/article/{id:[0-9]+}', function ($request, $response, $args) {
@@ -40,7 +44,11 @@ $app->get('/article/{id:[0-9]+}', function ($request, $response, $args) {
     $install->action = 'index';
     
     $article = new \app\controller\ArticleController($install);
-    return $article->indexAction($args['id']);
+    $data = $article->indexAction($args['id']);
+    return $this->response
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withStatus($data->code)
+            ->withJson(['code' => $data->code, 'message' => $data->message]);
 });
 
 $app->any('[/{params:.*}]', function (Request $request, Response $response, array $args) {
@@ -61,7 +69,11 @@ $app->any('[/{params:.*}]', function (Request $request, Response $response, arra
     if (method_exists($controller, $action)) {
         try {
             $obj = new $controller($install);
-            return call_user_func_array([$obj, $action], $params);
+            $data = call_user_func_array([$obj, $action], $params);
+            return $this->response
+                    ->withHeader('Access-Control-Allow-Origin', '*')
+                    ->withStatus($data->code)
+                    ->withJson(['code' => $data->code, 'message' => $data->message]);
         } catch (Exception $ex) {
             return $this->response->withJson(['code' => $ex->getCode(), 'message' => $ex->getMessage()]);
         }

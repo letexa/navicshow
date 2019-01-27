@@ -20,7 +20,7 @@ class ArticleController extends Controller {
                 'created' => $article->created,
                 'updated' => $article->updated
             ];
-            return $this->response->withHeader('Access-Control-Allow-Origin', '*')->withJson(['code' => $this->code, 'message' => $this->message]);
+            return $this;
         } catch (\ActiveRecord\RecordNotFound $ex) {
             return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Article not found']);
         }
@@ -49,10 +49,11 @@ class ArticleController extends Controller {
         $offset = !empty($params['offset']) ? $params['offset'] : 0;
 
         try {
+            $data = new \stdClass();
+            $data->code = $this->code;
             $articles = Article::find('all', ['limit' => $limit, 'offset' => $offset, 'order' => 'id DESC']);
-            return $this->response
-                        ->withHeader('Access-Control-Allow-Origin', '*')
-                        ->withJson(['code' => $this->code, 'message' => ArticleList::get($articles)]);
+            $data->message = ArticleList::get($articles);
+            return $data;
         } catch (\ActiveRecord\RecordNotFound $ex) {
             return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Articles not found']);
         }
