@@ -22,7 +22,7 @@ class ArticleController extends Controller {
             ];
             return $this;
         } catch (\ActiveRecord\RecordNotFound $ex) {
-            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Article not found']);
+            return (object)['code' => 404, 'message' => 'Article not found'];
         }
     }
     
@@ -39,7 +39,7 @@ class ArticleController extends Controller {
             $this->message = $result;
         }
         
-        return $this->response->withStatus($this->code)->withJson(['code' => $this->code, 'message' => $this->message]);
+        return (object)['code' => $this->code, 'message' => $this->message];
     }
     
     public function listAction()
@@ -55,7 +55,7 @@ class ArticleController extends Controller {
             $data->message = ArticleList::get($articles);
             return $data;
         } catch (\ActiveRecord\RecordNotFound $ex) {
-            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Articles not found']);
+            return (object)['code' => 404, 'message' => 'Articles not found'];
         }
     }
     
@@ -75,7 +75,7 @@ class ArticleController extends Controller {
 
             return $this->response->withStatus($this->code)->withJson(['code' => $this->code, 'message' => $this->message]);
         } catch (\ActiveRecord\RecordNotFound $ex) {
-            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Article not found']);
+            return (object)['code' => 404, 'message' => 'Article not found'];
         }
     }
     
@@ -84,9 +84,9 @@ class ArticleController extends Controller {
         try {
             $article = Article::find($this->request->getParsedBodyParam('id'));
             $article->delete();
-            return $this->response->withJson(['code' => $this->code, 'message' => $this->message]);
+            return (object)['code' => $this->code, 'message' => $this->message];
         } catch (\ActiveRecord\RecordNotFound $ex) {
-            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Article not found']);
+            return (object)['code' => 404, 'message' => 'Article not found'];
         }
     }
     

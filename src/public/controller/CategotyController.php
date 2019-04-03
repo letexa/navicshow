@@ -18,9 +18,9 @@ class CategoryController extends Controller {
                 'created' => $category->created,
                 'updated' => $category->updated
             ];
-            return $this->response->withJson(['code' => $this->code, 'message' => $this->message]);
+            return (object)['code' => $this->code, 'message' => $this->message];
         } catch (\ActiveRecord\RecordNotFound $ex) {
-            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Category not found']);
+            return (object)['code' => 404, 'message' => 'Category not found'];
         }
     }
     
@@ -32,9 +32,9 @@ class CategoryController extends Controller {
 
         try {
             $categories = Category::find('all', ['limit' => $limit, 'offset' => $offset, 'order' => 'id DESC']);
-            return $this->response->withJson(['code' => $this->code, 'message' => CategoryList::get($categories)]);
+            return (object)['code' => $this->code, 'message' => CategoryList::get($categories)];
         } catch (\ActiveRecord\RecordNotFound $ex) {
-            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Categories not found']);
+            return (object)['code' => 404, 'message' => 'Categories not found'];
         }
     }        
     
@@ -49,7 +49,7 @@ class CategoryController extends Controller {
             $this->message = $result;
         }
         
-        return $this->response->withStatus($this->code)->withJson(['code' => $this->code, 'message' => $this->message]);
+        return (object)['code' => $this->code, 'message' => $this->message];
     }
     
     public function updateAction()
@@ -64,9 +64,9 @@ class CategoryController extends Controller {
                 $this->message = $result;
             }
 
-            return $this->response->withStatus($this->code)->withJson(['code' => $this->code, 'message' => $this->message]);
+            return (object)['code' => $this->code, 'message' => $this->message];
         } catch (\ActiveRecord\RecordNotFound $ex) {
-            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Category not found']);
+            return (object)['code' => 404, 'message' => 'Category not found'];
         }
     }
     
@@ -75,9 +75,9 @@ class CategoryController extends Controller {
         try {
             $category = Category::find($this->request->getParsedBodyParam('id'));
             $category->delete();
-            return $this->response->withJson(['code' => $this->code, 'message' => $this->message]);
+            return (object)['code' => $this->code, 'message' => $this->message];
         } catch (\ActiveRecord\RecordNotFound $ex) {
-            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'Category not found']);
+            return (object)['code' => 404, 'message' => 'Category not found'];
         }
     }
 }

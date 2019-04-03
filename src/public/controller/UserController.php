@@ -17,7 +17,7 @@ class UserController extends Controller {
             $params = $this->request->getQueryParams();
             $user = User::find('one', ['token' => !empty($params['authorization']) ? md5($params['authorization']) : null]);
 
-            return $this->response->withJson([
+            return (object)[
                 'code' => $this->code, 
                 'message' => [
                     'id' => $user->id,
@@ -26,9 +26,9 @@ class UserController extends Controller {
                     'created' => $user->created,
                     'updated' => $user->updated
                 ]
-            ]);
+            ];
         } catch (\ActiveRecord\RecordNotFound $ex) {
-            return $this->response->withStatus(404)->withJson(['code' => 404, 'message' => 'User not found']);
+            return (object)['code' => 404, 'message' => 'User not found'];
         }
     }
 }

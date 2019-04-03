@@ -8,7 +8,7 @@ class IndexController extends Controller {
     
     public function indexAction()
     {
-        return $this->response->withJson(['code' => 200, 'response' => 'This is Navicshow API!']);
+        return (object)['code' => 200, 'message' => 'This is Navicshow API!'];
     }
 }
 

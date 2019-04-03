@@ -65,7 +65,7 @@ $app->any('[/{params:.*}]', function (Request $request, Response $response, arra
     
     $controller = _NAMESPACE_ . 'controller\\' . $install->controller . 'Controller';
     $action = $install->action . 'Action';
-    
+
     if (method_exists($controller, $action)) {
         try {
             $obj = new $controller($install);
