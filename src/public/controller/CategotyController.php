@@ -28,7 +28,7 @@ class CategoryController extends Controller {
     {
         $params = $this->request->getQueryParams();
         $limit = !empty($params['limit']) ? $params['limit'] : 10;
-        $offset = !empty($params['offset']) ? $params['offset'] : 0;
+        $offset = !empty($params['offset']) && $params['offset'] > 0 ? ($params['offset'] - 1) * $limit : 0;
 
         try {
             $categories = Category::find('all', ['limit' => $limit, 'offset' => $offset, 'order' => 'id DESC']);
