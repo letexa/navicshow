@@ -20,6 +20,13 @@ class Category extends \navic\Model {
         ['name', 'within' => [self::NAME_MIN, self::NAME_MAX]]
     ];
 
+    static public function count()
+    {
+        $category = new self();
+        $result = $category->find_by_sql('select count(id) as count from categories');
+        return $result[0]->count;
+    }
+
     public function save($validate = true) {
         
         $this->violations = [
@@ -31,5 +38,7 @@ class Category extends \navic\Model {
         
         return parent::save($validate);
     }
+
+
     
 }

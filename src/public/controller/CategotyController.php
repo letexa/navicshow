@@ -80,5 +80,15 @@ class CategoryController extends Controller {
             return (object)['code' => 404, 'message' => 'Category not found'];
         }
     }
+
+    public function countAction()
+    {
+        try {
+            $result = Category::count();
+            return (object)['code' => $this->code, 'message' => $result];
+        } catch (\Exception $ex) {
+            return (object)['code' => $ex->getCode(), 'message' => $ex->getMessage()];
+        }
+    }
 }
 
