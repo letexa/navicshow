@@ -18,7 +18,7 @@ php: >= 7.1
 
 # Nginx конфиг
 
-`server {
+server {
         listen 80;
         listen [::]:80;
 
@@ -61,4 +61,4 @@ php: >= 7.1
         dav_methods PUT DELETE MKCOL COPY MOVE;
 }
 
-`
+
