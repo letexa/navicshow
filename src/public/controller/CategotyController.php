@@ -11,7 +11,8 @@ class CategoryController extends Controller {
     public function indexAction($id)
     {
         try {
-            $category = Category::find($id);
+            // Баг в компоненте php-activerecord поэтому подавляем выводимый warning
+            $category = @Category::find($id);
             $this->message = [
                 'id' => $category->id,
                 'name' => $category->name,
@@ -55,7 +56,7 @@ class CategoryController extends Controller {
     public function updateAction()
     {
         try {
-            $category = Category::find($this->request->getParsedBodyParam('id'));
+            $category = @Category::find($this->request->getParsedBodyParam('id'));
             $category->name = $this->request->getParsedBodyParam('name');
             $result = $category->save();
             
