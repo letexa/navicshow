@@ -74,7 +74,7 @@ class CategoryController extends Controller {
     public function deleteAction()
     {
         try {
-            $category = Category::find($this->request->getParsedBodyParam('id'));
+            $category = @Category::find($this->request->getParsedBodyParam('id'));
             $category->delete();
             return (object)['code' => $this->code, 'message' => $this->message];
         } catch (\ActiveRecord\RecordNotFound $ex) {
