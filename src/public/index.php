@@ -10,6 +10,8 @@ require_once '../../resources/error.php';
 require_once '../../resources/active_record.php';
 require_once '../../resources/authenticator.php';
 
+error_reporting(E_ERROR | E_PARSE);
+
 $app = new \Slim\App($c);
 
 $app->add(new TokenAuthentication([
