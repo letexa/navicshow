@@ -12,10 +12,19 @@
         "vakata/config": "^2.0",
         "php-activerecord/php-activerecord": "^1.2",
         "odan/phinx-migrations-generator": "^3.1",
-        "symfony/validator": "^4.2"
+        "symfony/validator": "^4.2",
+        "coffeecode/uploader": "^1.0",
+        "nokitakaze/randomstring": "^0.2.1"
     },
     "require-dev": {
         "codeception/codeception": "^2.5",
         "vlucas/phpdotenv": "^2.5"
+    },
+    "config": {
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        },
+        "optimize-autoloader": true
     }
 }

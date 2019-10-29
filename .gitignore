@@ -2,3 +2,4 @@
 /nbproject
 /tests/_data/dump.sql
 /.env
+/uploads
