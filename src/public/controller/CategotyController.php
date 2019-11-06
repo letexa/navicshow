@@ -29,7 +29,7 @@ class CategoryController extends Controller {
     {
         $params = $this->request->getQueryParams();
         $data['order'] = 'id DESC';
-        $limit = !empty($params['limit']) ? $params['limit'] : null;
+        $limit = !empty($params['limit']) ? $params['limit'] : 10;
         if ($limit && !empty($params['offset'])) {
             $offset = $params['offset'] > 0 ? ($params['offset'] - 1) * $limit : 0;
             $data['limit'] = $limit;

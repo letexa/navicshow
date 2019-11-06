@@ -46,7 +46,11 @@ class ArticleController extends Controller {
     {
         $params = $this->request->getQueryParams();
         $limit = !empty($params['limit']) ? $params['limit'] : 10;
-        $offset = !empty($params['offset']) ? $params['offset'] : 0;
+        if ($limit && !empty($params['offset'])) {
+            $offset = $params['offset'] > 0 ? ($params['offset'] - 1) * $limit : 0;
+            $data['limit'] = $limit;
+            $data['offset'] = $offset;
+        }
 
         try {
             $data = new \stdClass();
@@ -89,5 +93,14 @@ class ArticleController extends Controller {
             return (object)['code' => 404, 'message' => 'Article not found'];
         }
     }
-    
+
+    public function countAction()
+    {
+        try {
+            $result = Article::count();
+            return (object)['code' => $this->code, 'message' => $result];
+        } catch (\Exception $ex) {
+            return (object)['code' => $ex->getCode(), 'message' => $ex->getMessage()];
+        }
+    }    
 }
