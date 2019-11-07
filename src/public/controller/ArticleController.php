@@ -77,7 +77,7 @@ class ArticleController extends Controller {
                 $this->message = $result;
             }
 
-            return $this->response->withStatus($this->code)->withJson(['code' => $this->code, 'message' => $this->message]);
+            return (object)['code' => $this->code, 'message' => $this->message];
         } catch (\ActiveRecord\RecordNotFound $ex) {
             return (object)['code' => 404, 'message' => 'Article not found'];
         }
