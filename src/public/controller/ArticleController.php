@@ -34,6 +34,7 @@ class ArticleController extends Controller {
         $article->category_id = $this->request->getParsedBodyParam('category_id');
         $result = $article->save();
         
+        
         if($result !== true) {
             $this->code = 400;
             $this->message = $result;

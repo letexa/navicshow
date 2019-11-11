@@ -17,6 +17,8 @@ class Article extends \navic\Model {
     const TEXT_MIN = 100;
     
     const TEXT_MAX = 10000;
+
+    const PREVIEW = 200;
     
     /*
      * Для ORM валидации
@@ -35,6 +37,11 @@ class Article extends \navic\Model {
     ];
 
     public function save($validate = true) {
+
+        $preview = strip_tags($this->text);
+        $preview = substr($preview, 0, self::PREVIEW);
+        $preview = rtrim($preview, '!,.-');
+        $this->preview = substr($preview, 0, strrpos($preview, ' ')) . '...';
         
         $this->violations = [
             'title' => $this->validator->validate($this->title, [
@@ -48,8 +55,12 @@ class Article extends \navic\Model {
             'category_id' => $this->validator->validate($this->category_id, [
                 new Assert\NotBlank(),
                 new AcmeAssert\CategoryExistence
+            ]),
+            'preview' => $this->validator->validate($this->preview, [
+                new Assert\NotBlank(),
             ])
         ];
+
         
         return parent::save($validate);
     }

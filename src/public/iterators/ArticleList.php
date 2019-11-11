@@ -42,6 +42,7 @@ class ArticleList implements \Iterator {
         $item->id = $current->id;
         $item->title = $current->title;
         $item->text = $current->text;
+        $item->preview = $current->preview;
         $item->category_id = $current->category_id;
         $item->created = $current->created;
         $item->updated = $current->updated;
